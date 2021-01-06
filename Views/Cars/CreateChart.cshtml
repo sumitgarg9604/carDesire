@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+
+@{
+    ViewBag.Title = "Compars Cars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+window.onload = function () {
+
+    var result = @Html.Raw(ViewBag.DataPoints);
+var dataPoints =[];
+for(var i = 0; i < result.length; i++){
+	dataPoints.push({label:result[i].ChartCarMake, y:result[i].ChartCarMileage});
+}
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title: {
+            text: "Compare the Cars by Mileage"
+        },
+        axisY : {
+                title: "Mileage (in Km/h)"
+                
+            },
+            axisX: {
+                title: "Cars at CarDesire"
+                
+            },
+        data: [
+            {
+                type: "column",
+                dataPoints: dataPoints,
+            }
+    ]
+});
+chart.render();
+
+};
+    </script>
+</head>
+<body>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>     

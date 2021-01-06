@@ -1,0 +1,46 @@
+﻿
+
+@{
+    ViewBag.Title = "Home Page";
+}
+ 
+    <body>
+
+    </body>
+    
+
+
+    <div class="jumbotron "style="background-color:black">
+        <h1 style="color:white">CarDesire</h1>
+
+        <div class="embed-responsive embed-responsive-4by3">
+            <iframe  class="embed-responsive-item" frameborder="0" width="560" height="315" src="https://biteable.com/watch/embed/financial-product-explainer-copy-2380911" allowfullscreen="true" allow="autoplay"></iframe>
+        </div>
+
+    </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+
+        Car Desire Provides you with a booking of cars based on hourly basis. No Need to buy a car. We have more than 10 pods arount the city of Melbourne.
+            Choose the one near your location and get on a  ride.
+        </p>
+        <p><a class="btn btn-primary">Watch Above Video</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Search From Variety</h2>
+        <p>CarDesire have a lot of cars to choose from. For every location we provide you cars with auto transmission, manual transmission and seating capacity from 2 to 7.
+        Currently, CarDesire has 10 cars to choose from.
+        </p>
+
+        <p><a class="btn-block btn-lg btn-success" @Html.ActionLink("Search Cars","SearchCars","Bookings")</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Compare Cars</h2>
+        <p>Got confused !!! Which car to choose. All the cars at CarDesire are compared based on mileage. Now save on fuel and save environment. As soon as we add cars to the
+        application. You ll be able to see the comparison</p>
+        <p><a class="btn btn-primary" @Html.ActionLink("Compare Cars", "CreateChart", "Cars")</a></p>
+    </div>
+</div>

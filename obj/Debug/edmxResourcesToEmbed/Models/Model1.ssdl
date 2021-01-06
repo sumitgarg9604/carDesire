@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="Cars" EntityType="Model1.Store.Cars" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PickDropLocs" EntityType="Model1.Store.PickDropLocs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="C__MigrationHistory" EntityType="Model1.Store.C__MigrationHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetRoles" EntityType="Model1.Store.AspNetRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Model1.Store.AspNetUserClaims" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Model1.Store.AspNetUserLogins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUsers" EntityType="Model1.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Feedbacks" EntityType="Model1.Store.Feedbacks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContactUs" EntityType="Model1.Store.ContactUs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Bookings" EntityType="Model1.Store.Bookings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Model1.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CarsPickDropLoc" Association="Model1.Store.CarsPickDropLoc">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="PickDropLoc" EntitySet="PickDropLocs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Model1.Store.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Model1.Store.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetRole" Association="Model1.Store.FK_AspNetUserRoles_AspNetRole">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetUser" Association="Model1.Store.FK_AspNetUserRoles_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="CarsBooking" Association="Model1.Store.CarsBooking">
+      <End Role="Cars" EntitySet="Cars" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserBooking" Association="Model1.Store.AspNetUserBooking">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="PickDropLocBooking" Association="Model1.Store.PickDropLocBooking">
+      <End Role="PickDropLoc" EntitySet="PickDropLocs" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cars">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarMake" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CarModel" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CarRC" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ChasisNum" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Transmission" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
+    <Property Name="HourlyRate" Type="float" Nullable="false" />
+    <Property Name="Mileage" Type="float" Nullable="false" />
+    <Property Name="PickDropLocId" Type="int" Nullable="false" />
+    <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PickDropLocs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocStreet" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LocSuburb" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LocState" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Landmark" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="ContextKey" Type="nvarchar" Nullable="false" MaxLength="300" />
+    <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ProductVersion" Type="nvarchar" Nullable="false" MaxLength="32" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="ClaimType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="ProviderKey" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="true" />
+    <Property Name="Gender" Type="nvarchar" Nullable="true" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Feedbacks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rating" Type="float" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContactUs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Query" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Bookings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PickUpDate" Type="datetime" Nullable="false" />
+    <Property Name="DropOffDate" Type="datetime" Nullable="false" />
+    <Property Name="CarsId" Type="int" Nullable="false" />
+    <Property Name="AspNetUserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="PickDropLocId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="AspNetRoles_Id" />
+      <PropertyRef Name="AspNetUsers_Id" />
+    </Key>
+    <Property Name="AspNetRoles_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <Association Name="CarsPickDropLoc">
+    <End Role="Cars" Type="Model1.Store.Cars" Multiplicity="*" />
+    <End Role="PickDropLoc" Type="Model1.Store.PickDropLocs" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="PickDropLoc">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cars">
+        <PropertyRef Name="PickDropLocId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUser" Type="Model1.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaim" Type="Model1.Store.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUser" Type="Model1.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogin" Type="Model1.Store.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CarsBooking">
+    <End Role="Cars" Type="Model1.Store.Cars" Multiplicity="1" />
+    <End Role="Booking" Type="Model1.Store.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cars">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CarsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserBooking">
+    <End Role="AspNetUser" Type="Model1.Store.AspNetUsers" Multiplicity="1" />
+    <End Role="Booking" Type="Model1.Store.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="AspNetUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PickDropLocBooking">
+    <End Role="PickDropLoc" Type="Model1.Store.PickDropLocs" Multiplicity="1" />
+    <End Role="Booking" Type="Model1.Store.Bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PickDropLoc">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="PickDropLocId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetRole">
+    <End Role="AspNetRole" Type="Model1.Store.AspNetRoles" Multiplicity="1" />
+    <End Role="AspNetUserRoles" Type="Model1.Store.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="AspNetRoles_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetUser">
+    <End Role="AspNetUserRoles" Type="Model1.Store.AspNetUserRoles" Multiplicity="*" />
+    <End Role="AspNetUser" Type="Model1.Store.AspNetUsers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="AspNetUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

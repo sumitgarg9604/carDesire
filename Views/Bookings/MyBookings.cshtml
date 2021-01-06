@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Assignment1_v9.Models.Booking>
+
+@{
+    ViewBag.Title = "My Bookings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<br />
+<h2>My Bookings</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PickUpDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DropOffDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Car.CarMake)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AspNetUser.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PickDropLoc.LocStreet)
+            </th>
+            <th></th>
+        </tr>
+    <thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PickUpDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DropOffDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.CarMake)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                </td>
+                <td>
+                    @item.PickDropLoc.LocStreet,@item.PickDropLoc.LocSuburb, @item.PickDropLoc.LocState
+                </td>
+                <td>
+
+                    @Html.ActionLink("Cancel Booking", "DeleteMyBooking", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.js")
+    
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+}
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
+      rel="stylesheet" />

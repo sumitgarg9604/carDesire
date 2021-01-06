@@ -1,0 +1,147 @@
+﻿@model Assignment1_v9.Models.Booking
+
+@{
+    ViewBag.Title = "SearchCars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+
+<h2>Search your Car here to fulfill your CarDesire </h2>
+<h3>Now you car book cars on hourly basis</h3>
+@using (Html.BeginForm("ViewCars", "Cars", null, FormMethod.Post, new { @id = "SearchCars" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @* <h4>Booking</h4> *@
+    
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <p><span id='display' class=" text-danger"></span></p>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PickUpDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PickUpDate, new { htmlAttributes = new { @class = "form-control", @Name = "PickUpDate" } })
+            @Html.ValidationMessageFor(model => model.PickUpDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DropOffDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.Editor("DropOffDate", new { htmlAttributes = new { @class = "form-control datetimepicker", @Name = "DropOffDate" } })
+            @Html.ValidationMessageFor(model => model.DropOffDate, "", new { @class = "text-danger" })
+            <p><span id='display' class=" text-danger"></span></p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <strong>Suburb</strong>
+        </div>
+
+        <div class="col-md-10">
+            @Html.DropDownList("LocSuburb", new SelectList(ViewBag.PickDropLocData, "Text", "Value"), "Select PickUp and DropOff Location", htmlAttributes: new { @class = "form-control", @Name = "PickDropLoc" })
+            @*  @Html.ValidationMessage("LocSuburb", "Please choose Pickup and DropOff Location", new { @class = "text-danger" }) *@
+            @*   @Html.DropDownList("PickDropLoc", new SelectList(ViewBag.PickDropLocData, "LocSuburb", "LocSuburb"), "Select PickUp and DropOff Location", htmlAttributes: new { @class = "form-control", @Name = "PickDropLoc"})*@
+            @*  @Html.ValidationMessageFor(model => model.PickDropLocId, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" value="Search Cars" onClick="checkdate()" id="SearchCars" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    <script type="text/javascript">
+        $(function () {
+            $('#PickUpDate').datetimepicker({
+                showClose: true,
+                showClear: true,
+                toolbarPlacement: 'top',
+                format: "DD/MM/YYYY hh:mm A",
+                minDate: moment().add(1,'hour'),
+                maxDate: moment().add(60, 'days'),
+                stepping: 30
+
+            });
+
+            $('#DropOffDate').datetimepicker({
+                showClose: true,
+                showClear: true,
+                toolbarPlacement: 'top',
+                format: "DD/MM/YYYY hh:mm A",
+                minDate: moment().add(2,'hour'),
+                maxDate: moment().add(60, 'days'),
+                useCurrent: false,
+                stepping: 60
+
+            });
+
+            $("#PickUpDate").on("dp.change", function (e) {
+                $('#DropOffDate').data("DateTimePicker").minDate(e.date);
+            });
+
+            $("#DropOffDate").on("dp.change", function (e) {
+                $('#PickUpDate').data("DateTimePicker").maxDate(e.date);
+            });
+
+
+            $.validator.methods["date"] = function (value, element) { return true; }
+        });
+
+
+
+
+        function checkdate() {
+            var dd = document.getElementById("DropOffDate").value;
+            var pd = document.getElementById("PickUpDate").value;
+            var dropdown1 = document.getElementById("LocSuburb").value;
+            document.getElementById('PickUpDate').style.borderColor = "#EBE9ED";
+            document.getElementById('DropOffDate').style.borderColor = "#EBE9ED";
+            document.getElementById('LocSuburb').style.borderColor = "#EBE9ED";
+
+            if (pd == "") {
+                document.getElementById('display').innerHTML = "Please enter Pick Up Date"
+                document.getElementById('PickUpDate').style.borderColor = "red";
+            }
+            else if (dd == "") {
+                document.getElementById('display').innerHTML = "Please enter Drop Off Date"
+                document.getElementById('DropOffDate').style.borderColor = "red";
+            }
+            else if (dropdown1 == "") {
+                document.getElementById('display').innerHTML = "Please Select Pickup and DropOff Location"
+                document.getElementById('LocSuburb').style.borderColor = "red";
+            }
+            else if (dd == pd) {
+
+                document.getElementById('display').innerHTML = "PickUp Date cannot be equal to DropOff Date";
+                document.getElementById('PickUpDate').style.borderColor = "red";
+                document.getElementById('DropOffDate').style.borderColor = "red";
+                return false;
+            }
+            else {
+
+                document.getElementById('SearchCars').submit();
+                return true;
+            }
+        }
+    
+
+    </script>
+}
+
+
+
+
+
+
+

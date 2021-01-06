@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Assignment1_v9.Models.Cars>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarMake)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.CarModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CarRC)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ChasisNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transmission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HourlyRate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mileage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PickDropLoc.LocStreet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                <img class="img-thumbnail" height="62" width="62" src="@Url.Content("~/Uploads/"+item.Path)" />
+            <td>
+              
+            <td>
+                @Html.DisplayFor(modelItem => item.CarMake)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarRC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChasisNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transmission)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HourlyRate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PickDropLoc.LocStreet)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.js")
+    <script>
+ $(document).ready(function () {
+ $('.table').DataTable();
+ });
+    </script>
+}
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
+      rel="stylesheet" />

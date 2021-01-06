@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Assignment1_v9.Models.PickDropLoc>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<div id="map" style="height:300px;"></div>
+<script>
+    mapboxgl.accessToken = "pk.eyJ1Ijoic3VtaXRnYXJnOTYwNCIsImEiOiJjazB5amMxaGgwODEzM2Rvd3Bya2dtYnQwIn0.400oOK4OMN_s4e7D90v0Yw";
+    var map = new mapboxgl.Map(
+        {
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v10'
+        });
+</script>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LocStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocSuburb)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Landmark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th></th>
+        </tr>
+    <thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr class="coordinates">
+                <td class="description">
+                    @Html.DisplayFor(modelItem => item.LocStreet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocSuburb)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocState)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Landmark)
+                </td>
+                <td class="longitude">
+                    @Html.DisplayFor(modelItem => item.Longitude)
+                </td>
+                <td class="latitude">
+                    @Html.DisplayFor(modelItem => item.Latitude)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+
+    @Scripts.Render("~/Scripts/DataTables/jquery.dataTables.js")
+    @Scripts.Render("~/Scripts/DataTables/dataTables.bootstrap.js")
+    @Scripts.Render("~/bundles/mapbox")
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+}
+<link href="~/Content/DataTables/css/dataTables.bootstrap.min.css"
+      rel="stylesheet" />

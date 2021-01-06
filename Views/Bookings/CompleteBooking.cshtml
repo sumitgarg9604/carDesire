@@ -1,0 +1,131 @@
+﻿@model Assignment1_v9.Models.Booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details of your Booking </h2>
+
+<div>
+    <h2>@ViewBag.Message</h2>
+    <h4>Booking Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            Booking For:
+        </dt>
+
+        <dd>
+            @ViewBag.userName
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PickUpDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PickUpDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DropOffDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DropOffDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.CarMake)
+        </dt>
+
+        <dd>
+            @ViewBag.carMake
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.CarModel)
+        </dt>
+
+        <dd>
+            @ViewBag.carModel
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.CarRC)
+        </dt>
+
+        <dd>
+            @ViewBag.carRC
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.Transmission)
+        </dt>
+
+        <dd>
+            @ViewBag.carTransmission
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.Capacity)
+        </dt>
+
+        <dd>
+            @ViewBag.carCapacity
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.HourlyRate)
+        </dt>
+
+        <dd>
+            @ViewBag.carHourlyRate
+        </dd>
+        <dt>
+            TotalCost:
+        </dt>
+
+        <dd>
+            @ViewBag.carTotalCost
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AspNetUser.Email)
+        </dt>
+
+        <dd>
+            @ViewBag.userEmail
+        </dd>
+
+        <dt>
+            Location:
+        </dt>
+
+        <dd>
+            @ViewBag.LocStreet,@ViewBag.LocSuburb,@ViewBag.LocState
+        </dd>
+        
+    </dl>
+</div>
+
+<p>
+    <a class="btn btn-primary" href="@Url.Action("generatepdf","Bookings", new {
+                                    userName = ViewBag.userName,
+                                    carMake =  ViewBag.carMake,
+                                    carModel = ViewBag.carModel,
+                                    carRC = ViewBag.carRC,
+                                    carTransmission = ViewBag.carTransmission,
+                                    carCapacity = ViewBag.carCapacity,
+                                    carHourlyRate = ViewBag.carHourlyRate,
+                                    carTotalCost = ViewBag.carTotalCost,
+                                    userEmail = ViewBag.userEmail,
+                                    LocStreet = ViewBag.LocStreet,
+                                    LocSuburb = ViewBag.LocSuburb,
+                                    LocState = ViewBag.LocState,
+                                    fileName = ViewBag.fileName})">Generate PDF</a>
+</p>
+<p><span id='nocar' class=" text-danger">@ViewBag.pdfPath</span></p>

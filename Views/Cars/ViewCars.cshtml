@@ -1,0 +1,272 @@
+﻿<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <style type="text/css">
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: none;
+            z-index: 9999;
+            opacity: 0.8;
+            filter: alpha(opacity=50);
+            min-height: 100%;
+            width: 100%;
+        }
+
+        .loading {
+            font-family: Arial;
+            font-size: 10pt;
+            border: 5px solid #67CFF5;
+            width: 200px;
+            height: 100px;
+            display: none;
+            position: fixed;
+            background-color: #0e0e0e;
+            z-index: 999;
+            background: url(http://smallenvelop.com/wp-content/uploads/2014/08/Preloader_11.gif) center no-repeat #fff;
+        }
+    </style>
+</head>
+
+<div class="loading" align="center">
+
+</div>
+<script type="text/javascript">
+    var modal, loading;
+    function ShowProgress() {
+        modal = document.createElement("DIV");
+        modal.className = "modal";
+        document.body.appendChild(modal);
+        loading = document.getElementsByClassName("loading")[0];
+        loading.style.display = "block";
+        var top = Math.max(window.innerHeight / 2 - loading.offsetHeight / 2, 0);
+        var left = Math.max(window.innerWidth / 2 - loading.offsetWidth / 2, 0);
+        loading.style.top = top + "px";
+        loading.style.left = left + "px";
+    };
+    ShowProgress();
+</script>
+
+
+
+
+
+@model IEnumerable<Assignment1_v9.Models.ViewCarsLocations.ViewModel>
+
+@{
+    ViewBag.Title = "ViewCars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/mapbox")
+}
+
+@*This is for change layout*@
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+
+
+
+<h2> ViewCars</h2>
+<div id="map" style="height:300px;"> </div>
+<div id='menu'>
+    <input id='dark-v10' type='radio' name='rtoggle' value='dark'>
+    <label for='dark'>dark</label>
+    <input id='streets-v11' type='radio' name='rtoggle' value='streets' onclick="load()" checked='checked'>
+    <label for='streets'>streets</label>
+    <input id='light-v10' type='radio' name='rtoggle' value='light'>
+    <label for='light'>light</label>
+    <input id='outdoors-v11' type='radio' name='rtoggle' value='outdoors'>
+    <label for='outdoors'>outdoors</label>
+    <input id='satellite-v9' type='radio' name='rtoggle' value='satellite'>
+    <label for='satellite'>satellite</label>
+</div>
+
+<script>
+    mapboxgl.accessToken = "pk.eyJ1Ijoic3VtaXRnYXJnOTYwNCIsImEiOiJjazB5amMxaGgwODEzM2Rvd3Bya2dtYnQwIn0.400oOK4OMN_s4e7D90v0Yw";
+    placeholder: 'Search for places in Berkeley';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10',
+        //center: [-122.25948, 37.87221]
+    });
+
+    var marker = new mapboxgl.Marker() // initialize a new marker
+        .setLngLat([-122.25948, 37.87221]) // Marker [lng, lat] coordinates
+        .addTo(map);
+    // Add the geocoder to the map
+
+    var geocoder = new MapboxGeocoder({ // Initialize the geocoder
+        accessToken: mapboxgl.accessToken, // Set the access token
+        mapboxgl: mapboxgl, // Set the mapbox-gl instance
+        marker: false,
+        // Do not use the default marker style
+    });
+
+    map.addControl(geocoder);
+    var layerList = document.getElementById('menu');
+    var inputs = layerList.getElementsByTagName('input');
+
+    function switchLayer(layer) {
+        var layerId = layer.target.id;
+        //  alert(data[0][0])
+        //  alert(size(data))
+        map.setStyle('mapbox://styles/mapbox/' + layerId);
+    }
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].onclick = switchLayer;
+    }
+
+</script>
+@{
+    string PickUpDate = ViewBag.pick;
+    string DropOffDate = ViewBag.drop;
+    System.TimeSpan diff = ViewBag.diff;
+    int days = diff.Days;
+    int hours = diff.Hours;
+    int min = diff.Minutes;
+    float minutes = min;
+    float mintoHours = minutes / 60;
+    float totalHours = (days * 24) + hours + mintoHours;
+
+}
+@*
+    <h4>days:@days</h4>
+    <h4>hours:@hours</h4>
+    <h4>min:@minutes</h4>
+    <h4>mintohours:@mintoHours</h4>
+    <h4>totalH : @totalHours</h4>
+*@
+
+<p><span id='nocar' class=" text-danger">@ViewBag.impmessage</span></p>
+<h2>Showing available cars from @PickUpDate to @DropOffDate</h2>
+<br />
+<br />
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .carmake {
+        font-size: 35px;
+        font-family: Calibri;
+        font-weight: bold;
+    }
+
+    .carRC {
+        font-size: 20px;
+        font-family: Calibri;
+        font-weight: 600;
+    }
+
+    .labels {
+        font-size: 20px;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-weight: 700;
+        display: inline;
+    }
+
+    .price {
+        font-size: 38px;
+        font-family: Calibri;
+        font-weight: 400;
+    }
+
+    .coordinatescss {
+        color: #D7E9F1;
+        font-size: 0.1px;
+    }
+</style>
+
+
+@foreach (var item in Model)
+{
+    using (Html.BeginForm("CompleteBooking", "Bookings"))
+    {
+        <div class="jumbotron" style="background-color:#D7E9F1">
+            <div class="row">
+                <div class="col-md-4">
+                    <img class="img-responsive" height="300" width="300" src="@Url.Content("~/Uploads/" + item.car.Path)" />
+                </div>
+
+                <div class="col-md-4">
+                    <div class="carmake">
+                        @Html.DisplayFor(modelItem => item.car.CarMake)
+                        @Html.DisplayFor(modelItem => item.car.CarModel)
+                    </div>
+                    <div class="carRC">
+                        <div class="labels">Registration Number:</div>
+                        @Html.DisplayFor(modelItem => item.car.CarRC)
+                    </div>
+                    <div class="carRC">
+                        <div class="labels">Transmission:</div>
+                        @Html.DisplayFor(modelItem => item.car.Transmission)
+                    </div>
+                    <div class="carRC">
+                        <div class="labels">Seating Capacity:</div>
+                        @Html.DisplayFor(modelItem => item.car.Capacity)
+                    </div>
+                    <div class="carRC">
+                        <div class="labels">Fuel Consumption:</div>
+                        @Html.DisplayFor(modelItem => item.car.Mileage)
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+
+                    <div class="carRC">
+                        <div class="labels">PickUp At:</div>
+                        @Html.DisplayFor(modelItem => item.loc.LocStreet)
+                        @Html.DisplayFor(modelItem => item.loc.LocSuburb)
+                    </div>
+                    <div class="price">Just <i class="fa fa-dollar" style="font-size:30px"></i>@Html.DisplayFor(modelItem => item.car.HourlyRate)/hour</div>
+                    @{
+                        var a = totalHours * item.car.HourlyRate;
+                    }
+
+                    <div class="price">Total Cost:<i class="fa fa-dollar" style="font-size:30px"></i>@a</div>
+
+                    <input type="submit" value="Book Now" class="btn btn-primary btn-lg" />
+                    <div class="coordinates">
+                        <div class="coordinatescss">
+                            <div class="latitude">
+                                @Html.DisplayFor(modelItem => item.loc.Latitude)
+                            </div>
+                            <div class="longitude">
+                                @Html.DisplayFor(modelItem => item.loc.Longitude)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @Html.HiddenFor(modelItem => item.loc.Id, new { @Name = "PickDropLocId" })
+            @Html.HiddenFor(modelItem => item.car.Id, new { @Name = "CarId" })
+            @Html.Hidden("PickUpDate", PickUpDate)
+            @Html.Hidden("DropOffDate", DropOffDate)
+            @Html.Hidden("totalPrice", a)
+
+
+            @*
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Book" class="btn btn-default" />
+                    </div>
+                </div>
+            *@
+        </div>
+
+    }
+}
+<p>
+    @Html.ActionLink("Search Again", "SearchCars", "Bookings")
+</p>
+<script type="text/javascript">
+    window.onload = function () {
+        setTimeout(function () {
+            document.body.removeChild(modal);
+            loading.style.display = "none";
+        }, 2000);
+    };
+</script>
